@@ -1,5 +1,5 @@
 The following is my python notes:
-
+1:import
 import getpass pa=getpass.getpass('password') #tips: this statement can only be exhibited through terminal in Pycharm rather than through Run#
 
 import sys
@@ -13,3 +13,13 @@ res=os.popen('shell order').read()  #assign the shell order result to the variab
 print(res)
 
 os.mkdir('new directory name')   #create a new directory in your present directory#
+
+2:string
+string formatting output:
+name_='your name'
+password_='your password'
+
+info='''
+name={name}
+password={password}
+'''.format(name=name,password=password
