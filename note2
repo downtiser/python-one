@@ -1,0 +1,12 @@
+2018/7/13
+python notes 2:
+1.
+The decode and encode between String and bytes:
+meg='一二三四五'
+print(meg.encode('utf-8'))  #.encode('the type of the string you want to encode,such as utf-8 or GBK...')
+print(meg.encode('utf-8').decode('ustf-8'))  
+>>>b'\xe4\xb8\x80\xe4\xba\x8c\xe4\xb8\x89\xe5\x9b\x9b\xe4\xba\x9
+>>>一二三四五
+
+2.
+List and Turple:
