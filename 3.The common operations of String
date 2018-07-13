@@ -1,0 +1,69 @@
+name='downtiser'
+print(name.capitalize())  #**首字母大写
+
+name='downtiser is a noob'
+print(name.count('o',-4,-1))  #***count the amount of a string
+
+print(name.center(66,'$'))   #***一共打66个字符，不足用$补，使name居中
+
+print(name.endswith('ob'))   #**判断一个字符串是否以该参数结尾
+print(name.startswith('do'))   #**判断一个字符串是否以该参数开头
+
+name='downtiser is a no\tob'
+print(name.expandtabs(40))    #*将字符串中的Tab改变为指定个数的空格
+print(name.find('tiser'))     #***返回首字母在字符串中的位置，可用于切片 如果没找到返回-1
+
+name='downtiser is {age} years old'
+age=20
+print(name.format(age=age))  #***String formating output
+age=18
+print(name.format_map({'age':age})) #*用于传递字典
+
+name='downtiser'
+print(name.index('wn'),name.find('wn'))  #**.index 类似于.find，区别是.index参数不存在时会返回异常
+
+eg1='123abc'
+eg2='do$$'
+print(eg1.isalnum(),eg2.isalnum()) #*判断是否为阿拉伯字符
+
+eg1='downtiser'
+eg2='123abc'
+print(eg1.isalpha(),eg2.isalpha())  #判断是否为纯英文字符
+
+print('10'.isdecimal())  #*判断是否为十进制
+
+print('11'.isdigit())  #***判断是否为纯数字
+
+print('abs'.isidentifier(),'1a'.isidentifier()) #判断是不是一个合法的标识符
+
+print('is'.islower(),'Abc'.islower())   #判断是否为小写
+print('ABC'.isupper())    #判断是否全为大写
+
+print('Is Title'.istitle(),'Is title'.istitle())  #判断是否为标题，即每个词是否首字母大写
+
+print(' * '.join(['a','b','c']))   #****把前面字符串的内容插入到后面给出的列表的两两元素之间再组成一个新的字符串
+
+print('123'.ljust(50,'*'))  #不足长度在右边补
+print('123'.rjust(50,'*'))  #不足长度在左边补
+
+print('ABcDe'.lower())   #大写变为小写
+print('abcDe'.upper())   #小写变大写
+
+print('\n\ndowntiser'.lstrip())  #去除左边的回车符
+print('downtiser\n\n'.rstrip())  #去除右边的回车符
+print('\n\ndowntiser\n\n'.strip())  #去除所有回车符
+
+passw=str.maketrans('downtiser','*#06#123$') #对两个字符串制定一一对应的加密规则
+print('resitiwon'.translate(passw))     #根据对应的加密规则输出加密后的结果
+
+print('noob'.replace('o','u',1))  #将指定个数的旧字符替换为新字符
+
+print('downtiser is a noob'.rfind('o'))  #找到最右边对应字符的下标
+print('downtiser is a noob'.split('o'))  #以对应字符作为分隔符分割整个字符串，并将分割出的元素组成一个列表
+print('downtiser\nis\na noob'.splitlines())  #以换行符作为分隔符分割整个字符串，并将分割出的元素组成一个列表
+
+print('DowNtiser iS a Noob'.swapcase())  #大小写互换
+
+print('is a title'.title())  #变为title格式
+
+print('name'.zfill(50)) #补位 补0
