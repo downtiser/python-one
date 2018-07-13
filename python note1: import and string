@@ -1,5 +1,23 @@
 The following is my python notes:
-1:import
+1.
+cycle:
+for cycle:
+for i in range(1,10,2):  #initial value is 1, final value is 10,step is 2
+    .....
+ 
+else:
+  ...
+  
+
+while cycle:
+
+while ....:
+    ....
+else:
+    ....
+    
+
+2:import
 import getpass pa=getpass.getpass('password') #tips: this statement can only be exhibited through terminal in Pycharm rather than through Run#
 
 import sys
@@ -14,7 +32,7 @@ print(res)
 
 os.mkdir('new directory name')   #create a new directory in your present directory#
 
-2:string
+1:string
 string formatting output:
 
 method1:
