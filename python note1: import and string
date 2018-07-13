@@ -16,10 +16,33 @@ os.mkdir('new directory name')   #create a new directory in your present directo
 
 2:string
 string formatting output:
+
+method1:
 name_='your name'
 password_='your password'
 
 info='''
 name={name}
 password={password}
-'''.format(name=name,password=password
+'''.format(name=name_,password=password_)
+
+
+method2:
+name_='your name'
+password_='your password'
+
+info='''
+name={0}
+password={1}
+'''.format(name_,password=_)
+
+method3:
+name_='your name'
+password_='your password'
+num=123
+
+info='''
+name=%s
+password=%s
+num=%d
+'''%(name_,password_,num)
