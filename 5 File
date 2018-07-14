@@ -1,1 +1,80 @@
+#Downtiser
+f=open('tank','r',encoding='utf-8')
+#'r'   open for reading (default)
+# w'   open for writing, truncating the file first
+#'x'   create a new file and open it for writing
+#'a'   open for writing, appending to the end of the file if it exists
+#'b'   binary mode
+#'t'   text mode (default)
+#'+'   open a disk file for updating (reading and writing)
+# U'   universal newline mode (deprecated)
+ #文件句柄
+#print(tank,type(tank))
+f2=open('tank2','a',encoding='utf-8')
 
+
+
+'''for i in range(10):
+    print(f.readline())
+
+print('-------')
+'''
+'''
+for i,item in enumerate(f.readlines()): #将每一行取出作为元素组成一个列表,依次取出每个元素的下标和元素,此循环效率低，不宜处理大文件
+    if (i+1)%10==0:
+        print('------$$$------')
+        continue
+    print(i+1,item.strip())  #打印每一行，并且用.strip把行末的\n去除
+'''
+#高效循环
+'''count=0
+print('-----高效循环----')
+for i in f:
+    count+=1
+    if count%10==0:
+        print('-----****----')
+        
+        continue
+
+    print(i.strip())
+'''
+
+print(f.tell()) #显示文件指针所在位置
+print(f.readline()) #不包括换行符读七个字符
+print(f.readline()) #不包括换行符读七个字符
+print(f.tell()) #每读一个字符指针值+1,初始为0
+f.seek(0) #返回光标至指定位置
+print(f.readline())
+
+print(f.encoding) #显示文件编码格式
+
+print(f.fileno())  #显示操作系统操作文件接口编号
+
+print(f.flush()) #即使输入内容不足缓存转硬盘时的大小要求，通过flush也可立刻将内容输入文件中，保证同步性，避免因意外文件丢失
+
+
+print(f2.truncate(5)) #从头开始截取指定个数的字符
+
+
+print('--------')
+f3=open('tank3','r+',encoding='utf-8')  #读写模式
+print(f3.tell())
+f3.seek(40)
+f3.write('*****00*****\n')  #可以写在光标所在位置 ***会覆盖原有内容***
+f3.flush()
+f3.close()
+
+'''f3=open('tank4','w+',encoding='utf-8')  #写读模式
+f3.write('-----noob----\n')
+f3.write('-----noob----\n')
+f3.write('-----noob----\n')
+f3.seek(10)
+f3.write('*****downtiser*****\n')
+f3.write('$$$idiot$$$')
+'''
+#f3=open('tank3','rb')  #二进制读模式 二进制文件
+
+fb=open('bytes','wb')
+fb.write('downtiser is a big noob\n'.title().encode()) #通过encode将utf-8转为二进制
+fb.write(b'all noobs need a brain'.title())  #通过加前缀b注明为二进制
+fb.close()
