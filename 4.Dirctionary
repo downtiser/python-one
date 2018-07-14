@@ -1,0 +1,59 @@
+#Downtiser
+dict={
+    'noob':'%40+',
+    'ordinary':'%50+',
+    'powerful':'%60+',
+    'god':'%70+'
+
+}
+print(dict)
+print(dict['noob'])
+print(dict.get('god+'),dict.get('noob'))
+dict['god+']='%80+'
+print(dict)
+#del dict['god+']
+dict.pop('god+')
+print(dict)
+
+player={
+    'wg_worker':['1% - 100%','nameless','no idea'],
+    'noob':{
+        'winrate':'%40+',
+        'factor':'play like a monkey',
+        'habit':'just camp'
+    },
+    'ordinary':{
+        'winrate':'%50+',
+        'factor':'would do something useful',
+        'habit':'go to the common place'
+    },
+    'powerful':{
+        'winrate':'%60+',
+        'factor':'can make strategies to win a game',
+        'habit':'control the game'
+    },
+    'god':{
+        'winrate':'%70+',
+        'factor':'just carry the game',
+        'habit':'1 vs 7'
+    }
+}
+player.setdefault('monkey',{'winrate':'30%','factor':'monkey','habit':'monkey'})  #往字典中添加新键-值，如果键已经存在就不改
+
+player.update(dict)  #以参数字典作为新字典更新原有字典11，有重叠就更改，无重叠就添加
+new=dict.fromkeys([1,2,3],'a') #初始化一个列表，key取第一个参数中每个列表元素，value取后面值，当后一个参数为列表或字典之类时，每个key都指向这个序列，类似于浅copy，改一个全会变
+print(new)
+
+
+print(player)
+print(dict.values()) #取出字典中每一个value，组成一个列表
+print(dict.keys())  #取出字典中每一个key，组成一个列表
+print(dict.items()) #取出字典中每一个key-value，组成一个小元组，这些元祖再组成一个列表
+
+for i in dict:
+    print(i,dict[i])  #较高效遍历字典中key-value
+
+print('-------')
+
+for k,v in dict.items():
+    print(k,v)   #较低效遍历
