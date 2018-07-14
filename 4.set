@@ -1,0 +1,36 @@
+#Downtiser
+list1=[1,2,3,'a','b','c',2,3,4]
+set1=set(list1)
+
+list2=[3,4,'a',9,'f']
+set2=set(list2)
+print(set1,set2)
+print(set1.intersection(set2),set1 & set2)  #取两个集合交集
+print(set2.union(set1),set1 | set2)   #取两个集合并集
+
+print(set1.difference(set2),set2-set1)  #取两个集合的差集
+
+list3=[1,'a','b']
+set3=set(list3)
+print(set3.issubset(set1))  #判断set3是否为set1的子集
+print(set1.issuperset(set3))  #判断set1是否为set3的父集
+
+print(set1.symmetric_difference(set2),set1^set2)  #对称差集 去掉两个集合中重合元素组成新集合
+
+list4=['#','$','@']
+set4=set(list4)
+print(set4.isdisjoint(set3))   #判读两个集合交集是否为空集
+
+set4.add('downtiser')   #往集合中添加新元素
+print(set4)
+
+set4.update(['noob','idiot']) #添加多个元素
+print(set4,'noob' in set4)
+
+
+#print('---',set4.pop(),set4) #随机删除一个元素 最好不要用
+set4.remove('#') #删除指定元素
+print(set4)
+
+set4.discard('noob')  #删除指定元素，类似于remove，只不过不存在不报错，返回none
+print(set4)
