@@ -1,0 +1,105 @@
+#Downtiser
+print(abs(-1)) #取绝对值
+
+print(all([1,2,3,'a']),all([0,1,2]),all([None,1,2])) #判断可迭代对象中的元素是否都为True
+
+print(any([1,0,None]))  #只要可迭代对象中有一个对象为真，返回真，若为空，返回False
+
+print(type(ascii([1,2,'a'])))   #将对象变为字符串
+print(repr([1,2,3])) #以字符串形式打印参数 与ascii类似
+
+print(bin(0xff))  #将一个整数转换为二进制形式
+
+print(bool(0),bool(1))  #计算布尔值
+
+a='downtiser'
+a=bytes(a,encoding='utf-8')
+print(a.capitalize(),a) #修改之后a没有变
+b=bytearray('abc123',encoding='utf-8') #将字符串变为字节为元素的数组，以ASCII码形式存储
+b[1]=112
+print(b,type(b))
+
+print(callable([1,2]),callable((1,2)),callable(abs))  #判断对象是否可调用,即是否可在后面加()
+
+print(chr(39038),ord('航'))  #chr()返回一个一定范围内整数unicode码对应的字符，ord()返回一个字符的unicode值
+
+code='print("compile successfully")'
+print(compile(code,'','exec'))      #将字符串编译为可执行代码
+exec(code) #执行一段可以执行的字符串代码
+
+print(dict({'a':1,'b':2}))  #生成一个字典
+
+print(dir('a'))  #查看一种数据类型的方法
+
+
+print(divmod(14,3))  #返回两个数的商与余数
+
+code2='[1,2,3]'
+print(eval(code2))  #将传入的字符串变为可执行代码。字符串只能为字典或表达式
+
+calc=lambda x:x if x<4 else True  #匿名函数,只能处理简单表达式，常与其他函数一起使用
+print(calc(3))
+
+res=filter(lambda x:x>5,[1,5,10,15]) #过滤器，将后一个参数即可迭代对象的元素逐一传入前一个参数（一个函数或无），返回值为True的元素，组成一个迭代器
+print(type(res))
+for i in res:
+    print(i)
+print('-----------')
+res2=map(lambda x,y:x*y,range(5),[2,4,6,8])
+#若前置函数含有多个参数，则按位置对应关系迭代后面对应参数个数的几个可迭代对象到函数中运算，直到某一个可迭代对象被迭代完,将结果组成一个迭代器
+print(res2)
+for i in res2:
+    print(i)
+print('------------')
+import functools
+res3=functools.reduce(lambda x,y:x+y,range(1)) #现将后一个可迭代对象中的前两个元素进行函数操作，将返回值与后一个值再进行函数操作，依次迭代
+print(type(res3),res3)
+
+s=frozenset([1,2,3])  #冻结一个可迭代对象，无法再对其进行任何操作
+print(s)
+
+print(globals()) #将当前界面上所有全局变量与其值组成key-value的字典
+
+print(hash('downtiser'))  #为参数生成一个唯一值
+
+print(hex(255))  #将一个整数转为16进制
+
+def text():
+    local_var=333 #以局部变量及其值组成key-value并组成字典
+    print(locals())
+text()
+
+print(max(1,2,3,4))  #返回最大值
+print(min(1,2,3,4))  #返回最小值
+
+
+print(oct(17)) #返回一个数的八进制
+
+print(pow(2,4),2**4) #返回一个数的对应次幂
+
+str=reversed('abc123')  #将参数反转，返回一个迭代器
+for i in str:
+    print(i,end=" ")
+print('\n')
+print(round(3.1415,3))  #对第一个参数制定保留几位小数，缺省值为取整
+
+c=range(10)
+c2=c[slice(2,5)]   #对引用可迭代对象进行切片，等价于c2=c[2:5]
+print(c2)
+
+a={1:2,5:15,3:8,4:7,-3:17,44:17}
+print(sorted(a.items(),key=lambda x:x[1],reverse=True))  #对参数进行排序 reverse为true为降序，默认为升序,key=可以指定元素进行排序，比如选value来排序
+print(a)
+
+print(sum([1,3,7,25])) #求和
+
+
+a=[2,4,6,8]
+b=['a','b','c','d','e']
+c=[1,3,5,7]
+z=zip(a,b,c)  #迭代每个可迭代对象的元素组成小元组，再组成迭代器，以较小的iterable为准
+for i in z:
+    print(i)
+
+
+#__import__('decorater2')  #将字符串形式的模块名导入
