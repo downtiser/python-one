@@ -102,4 +102,8 @@ for i in z:
     print(i)
 
 
-#__import__('decorater2')  #将字符串形式的模块名导入
+__import__('decorater2')  #将字符串形式的模块名导入
+
+s1={'runoob': 'runoob.com', 'google': 'google.com'}
+s2=str(s1)  #将参数转为字符串
+print(s2)
