@@ -25,6 +25,7 @@ sys.path
 sys.argv  #input some arguments to made a list, if no input, there is still a path in the list
 print(sys.argv[2])
 
+
 import os
 os.system('shell order')  #execute the shell order
 res=os.popen('shell order').read()  #assign the shell order result to the variable 'res' tips: Don't forget "**.read()**"
