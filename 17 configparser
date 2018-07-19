@@ -1,0 +1,76 @@
+#Downtiser
+import configparser   #用于处理配置文件
+#生成配置文件
+config = configparser.ConfigParser()  #调入对象
+config["DEFAULT"] = {'ServerAliveInterval': '45',  #给配置选项赋值 key-value
+                     'Compression': 'yes',
+                     'CompressionLevel': '9'}
+
+config['bitbucket.org'] = {}
+config['bitbucket.org']['User'] = 'hg'
+config['topsecret.server.com'] = {}
+topsecret = config['topsecret.server.com']# 取出config['topsecret.server.com']的字典，赋给topsecret
+topsecret['Host Port'] = '50022'  # 字典赋值
+topsecret['ForwardX11'] = 'no'  # same here
+config['DEFAULT']['ForwardX11'] = 'yes'
+with open('example.ini', 'w') as configfile:
+    config.write(configfile)  #创建对应的配置文件
+    
+ example.ini:
+ [DEFAULT]
+serveraliveinterval = 45
+compression = yes
+compressionlevel = 9
+forwardx11 = yes
+
+[bitbucket.org]
+user = hg
+
+[topsecret.server.com]
+host port = 50022
+forwardx11 = no
+
+#Downtiser
+import configparser
+conf=configparser.ConfigParser()  #指明conf为配置属性
+conf.read('example.ini')   #读入配置文件
+print(conf.sections())  #不显示默认default section，只导入其他section
+print(conf.defaults()) #只显示default
+
+print(conf['bitbucket.org']) #读入section
+print(conf['bitbucket.org']['user'])  #读入section下的option
+print(conf['topsecret.server.com']['host port'])
+
+for key in conf['DEFAULT']:
+    print(key,conf['DEFAULT'][key])  #遍历某个section下的所有option
+
+opera=conf.remove_section('bitbucket.org')  #删除section
+
+conf.write(open('example2.ini','w'))   #将改动覆盖回源文件
+
+print(conf.has_section('topsecret.server.com'))  #判断是否存在该section 不包括DEFAULT
+opera2=conf.remove_option('DEFAULT','compression')#移除指定section 下的option
+
+conf.write(open('example3.ini','w'))   
+
+example2.ini:
+[DEFAULT]
+serveraliveinterval = 45
+compression = yes
+compressionlevel = 9
+forwardx11 = yes
+
+[topsecret.server.com]
+host port = 50022
+forwardx11 = no
+
+example3.ini:
+[DEFAULT]
+serveraliveinterval = 45
+compressionlevel = 9
+forwardx11 = yes
+
+[topsecret.server.com]
+host port = 50022
+forwardx11 = no
+
