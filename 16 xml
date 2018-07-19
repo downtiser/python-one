@@ -42,3 +42,44 @@ xml_test:
         <neighbor name="Colombia" direction="E"/>
     </country>
 </data>
+
+
+
+#Downtiser
+import xml.etree.ElementTree as ET
+
+tree = ET.parse("xml_test.xml")
+root = tree.getroot()
+
+# 修改
+# for node in root.iter('year'):
+#     new_year = int(node.text) + 1
+#     node.text = str(new_year)  #给year的内容加1
+#     node.set("updated", "yes")  #给year 增加属性update，值为yes
+#
+# tree.write("xml_test.xml")
+
+#删除node
+for country in root.findall('country'): #.findall 能将所有'country'标签搜寻出来
+    rank = int(country.find('rank').text) #获得'rank'标签下的内容
+    if rank > 50:
+        root.remove(country)   #移除该标签及其所有内容
+
+tree.write('output.xml')
+
+
+<data>
+    <country name="Liechtenstein">
+        <rank updated="yes">2</rank>
+        <year updated="yes">2009</year>
+        <gdppc>141100</gdppc>
+        <neighbor direction="E" name="Austria" />
+        <neighbor direction="W" name="Switzerland" />
+    </country>
+    <country name="Singapore">
+        <rank updated="yes">5</rank>
+        <year updated="yes">2012</year>
+        <gdppc>59900</gdppc>
+        <neighbor direction="N" name="Malaysia" />
+    </country>
+    </data>
