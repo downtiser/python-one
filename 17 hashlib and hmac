@@ -1,0 +1,45 @@
+#Downtiser
+import hashlib   #Include SHA1 SHA224 SHA256 SHA384 SHA512 MD5
+#用于加密
+print('-----MD5-----')
+encrypt=hashlib.md5()
+encrypt.update(b'I am ')
+
+print(encrypt.digest()) #二进制hash
+print(encrypt.hexdigest()) #十六进制hash
+
+encrypt.update(b'Downtiser,')
+print(encrypt.hexdigest())   #此时为I am Downtiser 的总的MD5
+
+encrypt.update(b' I am a noob')
+print(encrypt.hexdigest())
+
+encrypt2=hashlib.md5()
+encrypt2.update(b'I am Downtiser, I am a noob')  #以上三个字符串的融合
+print(encrypt2.hexdigest())  #只要值相同，MD5码就相同
+print('----unicode----')
+encrypt0=hashlib.md5()
+encrypt0.update('要我一直笑吗?'.encode(encoding='utf-8'))    #unicode 编码hash需先编码为utf-8
+print(encrypt0.hexdigest())
+#SHA1:
+print('-----SHA1-----')
+encrypt3=hashlib.sha1()
+encrypt3.update(b'I am Downtiser, I am a noob')
+print(encrypt3.hexdigest())
+
+#SH256:
+print('-----SHA256-----')
+encrypt4=hashlib.sha256()
+encrypt4.update(b'I am Downtiser, I am a noob')
+print(encrypt4.hexdigest())
+
+#SH512:
+print('-----SHA512-----')
+encrypt5=hashlib.sha512()
+encrypt5.update(b'I am Downtiser, I am a noob')
+print(encrypt5.hexdigest())
+
+#Downtiser
+import hmac
+m=hmac.new(b'noob',b'I am Downtiser, I am a noob')  #前一个参数对应key,后一个参数对应message 双重保障
+print(m.hexdigest())
