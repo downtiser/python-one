@@ -1,0 +1,47 @@
+#Downtiser
+import shutil #高级文件处理模块
+
+
+f1=open('1.txt','r',encoding='utf-8')
+f2=open('2.txt','w',encoding='utf-8')
+
+shutil.copyfileobj(f1,f2)   #复制第一个文件至第二个文件中
+
+shutil.copyfile('3.txt','4.txt')  #不需要我们打开文件，直接将第一个文件中的所有内容复制到第二个文件中，如果第二个文件不存在，创建该文件
+
+shutil.copystat('3.txt','4.txt') #将一个文件所有状态复制给另一个文件
+
+shutil.copy('3.txt','4.txt')    #将文件内容和权限都复制给另一个文件
+
+shutil.copy2('3.txt','4.txt')   #将文件内容和所有信息都复制给另一个文件
+
+
+shutil.copytree('layer1','layer0')  #将指定目录的内容递归的全部复制给另一个目录，如果另一个目录不存在，就创建一个
+
+shutil.rmtree('layer0')  #递归的删除指定目录
+
+shutil.move('5.txt','layer1')  #将文件移动至指定目录
+
+shutil.make_archive(r'E:\mod_archive','zip',r'E:\A') #将文件或目录以指定格式压缩至目标目录，不写绝对路径默认为当前目录,注：不要压缩包含当前文件的文件，否则会进入死循环
+#实际上是调用zipfile 和 tarfile 两个模块来实现的
+
+import zipfile
+
+z=zipfile.ZipFile(r'E:\archive\zip_layer1.zip','w')  #创建压缩文件
+z.write('layer1')  #导入要压缩的文件
+z.write('4.txt')
+z.close() #完成压缩
+#解压缩
+z=zipfile.ZipFile(r'E:\archive\zip_layer1.zip','r')    #打开要解压的文件
+z.extractall(r'E:\archive')  #解压至指定路径，默认为当前目录
+z.close()
+
+import tarfile
+t=tarfile.TarFile(r'E:\archive\tar_layer1.tar','w')
+t.add('layer1')
+t.add('2.txt')
+t.close()
+
+t=tarfile.TarFile(r'E:\archive\tar_layer1.tar','r') #打开要解压的文件
+t.extractall(r'E:\archive') #解压至指定路径，默认为当前目录
+t.close()
