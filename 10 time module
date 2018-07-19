@@ -1,0 +1,28 @@
+#Downtiser
+import time
+#时间分三种格式:1时间戳 2格式化时间元组 3格式化字符串
+
+
+print(time.time())    #返回一个当前时间的时间戳 1970年初至今的时间换算成秒返回的时间戳
+
+print(time.timezone) #返回当前所在时区的秒格式,负数表示比utc早
+print(time.altzone) #返回所在时区的夏令时秒格式
+print(time.daylight) #判断是否使用夏令时,没有的话返回0
+#time.sleep(1)  #让程序睡指定秒数
+
+print(time.gmtime()) #往其中传时间戳，返回一个utc时区的时间元组
+print(time.localtime())  #返回一个当前时区的时间元组   time_isdst 表示是否为夏令时区，0表示不夏令时
+t=time.localtime()
+print(t.tm_year,t.tm_yday) #从元组中获取指定数据
+
+print(time.mktime(t))   #将时间元组转换为时间戳
+
+print(time.strftime('%Y-%m-%d %A %H:%M:%S',time.gmtime()))  #按输入的格式和时间元组输出字符串的格式化时间，时间元组缺省值为time.localtime()
+#%Y即time.tm_year....
+
+print(time.strptime('2018-07-19 Thursday 13:45:06','%Y-%m-%d %A %H:%M:%S'))  #按给定的格式化的字符串时间和一一对应的格式返回对应的时间元组
+
+
+print(time.asctime()) #将时间元组转换为字符串形式，缺省值为当前时间元组
+
+print(time.ctime(time.time())) #将时间戳转换为字符串形式，缺省值为当前时间戳
