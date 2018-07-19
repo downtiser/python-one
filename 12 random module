@@ -1,0 +1,17 @@
+#Downtiser
+import random
+print(random.random())  #生成一个随机浮点值，默认范围为[0,1)
+
+print(random.randint(a=1,b=20)) #生成一个在[a,b]范围内的随机整数
+
+print(random.randrange(1,10))  #默认生成一个在[0,num)范围内的随机整数，可指定下限
+
+print(random.choice('downtiser'),random.choice(['a', 1, 2, 8, 15, 'b']))   #返回一个序列中的一个随机值
+
+print(random.sample('downtiser123',3))   #从一个序列中取指定个随机元素，组成一个列表并返回
+
+print(random.uniform(5,10))   #生成一个指定范围内的浮点值
+
+card=[1, 2, 3, 4, 5, 6, 7, 8]
+random.shuffle(card)
+print(card)   #将一个有序序列的顺序变为无序，洗牌
