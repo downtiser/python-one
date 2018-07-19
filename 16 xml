@@ -49,15 +49,15 @@ xml_test:
 import xml.etree.ElementTree as ET
 
 tree = ET.parse("xml_test.xml")
-root = tree.getroot()
+root = tree.getroot()    #获取根节点
 
-# 修改
-# for node in root.iter('year'):
-#     new_year = int(node.text) + 1
-#     node.text = str(new_year)  #给year的内容加1
-#     node.set("updated", "yes")  #给year 增加属性update，值为yes
-#
-# tree.write("xml_test.xml")
+ 修改
+for node in root.iter('year'):  #遍历标签为year的节点
+     new_year = int(node.text) + 1
+     node.text = str(new_year)  #给year的内容加1
+     node.set("updated", "yes")  #给year 增加属性update，值为yes
+
+ tree.write("xml_test.xml")
 
 #删除node
 for country in root.findall('country'): #.findall 能将所有'country'标签搜寻出来
@@ -67,7 +67,7 @@ for country in root.findall('country'): #.findall 能将所有'country'标签搜
 
 tree.write('output.xml')
 
-
+output.xml:
 <data>
     <country name="Liechtenstein">
         <rank updated="yes">2</rank>
@@ -83,3 +83,42 @@ tree.write('output.xml')
         <neighbor direction="N" name="Malaysia" />
     </country>
     </data>
+
+
+#Downtiser
+import xml.etree.ElementTree as ET
+#创建xml文件
+new_xml = ET.Element("namelist")  #创建root节点
+name = ET.SubElement(new_xml, "name", attrib={"enrolled": "yes"})  #创建子节点
+age = ET.SubElement(name, "age", attrib={"checked": "no"})  #第一个参数指明创建哪个节点的子节点,即创建name子节点下的子节点 age 并添加属性checked 值为no
+sex = ET.SubElement(name, "sex")
+sex.text = 'Male'
+age.text='33'
+name.text='noob'
+name2 = ET.SubElement(new_xml, "name", attrib={"enrolled": "no"})
+age = ET.SubElement(name2, "age")
+sex=ET.SubElement(name2,'sex')
+age.text = '19'
+sex.text='Female'
+name2.text='idiot'
+
+et = ET.ElementTree(new_xml)  # 生成文档对象
+et.write("my_xml.xml", encoding="utf-8", xml_declaration=True) #xml_declaration=True声明这是xml格式
+
+ET.dump(new_xml)  # 打印生成的格式
+
+
+my_xml.xml:
+<?xml version='1.0' encoding='utf-8'?>
+<namelist>
+    <name enrolled="yes">noob
+        <age checked="no">33</age>
+        <sex>Male</sex>
+    </name>
+    <name enrolled="no">idiot
+        <age>19</age>
+        <sex>Female</sex>
+    </name>
+</namelist>
+
+
