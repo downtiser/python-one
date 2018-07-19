@@ -1,0 +1,62 @@
+#Downtiser
+import os
+print(os.getcwd())  #获取当前的工作目录
+os.chdir(r'E:\pycharmProjects\python3\package_mod')  #更改当前路径
+print(os.getcwd())
+print(os.curdir) #返回当前目录, . 表示当前目录
+print(os.pardir) #返回当前目录的父目录 ..表示父目录
+
+os.makedirs(r'E:\a\b\c\d') #递归创建目录，如果c不存在，创建c，b不存在，创建b，如此递推
+
+os.removedirs(r'E:\a\b\c\d')  #递归删除目录,若删除后为空，返回上一级目录，若也为空删除并返回上一级，依次类推
+
+#os.mkdir(r'E:\A')  #只能在已存在的目录下创建目录
+os.mkdir(r'E:\A\B')
+
+#os.rmdir(r'E:\A\B')  #只删除指定目录
+
+print(os.listdir(r'C:'))  #获得指定目录下的所有文件，组成一个列表
+
+#os.remove(r'E:\A\B')  #删除一个文件，需获得权限
+
+#os.rename(r'E:\A\B',r'E:\A\C')  #重命名指定路径下的文件
+
+print(os.stat(r'E:\A\C'))  #返回指定文件的信息
+
+
+print(os.sep)  #返回当前操作系统的文件分隔符 windows为\\ linux为/
+print(os.linesep)#返回当前操作系统的换行符 windows为\r\n linux为\n
+
+print(os.pathsep) #输出用于分割路径的字符串 windows下是; linux下是:
+
+#print(os.environ)  #返回操作系统下的环境变量
+
+print(os.name)  #返回当前系统名
+
+#print(os.system('dir'))  #返回系统命令结果
+
+print(os.path.abspath(__file__))   #获取指定文件的绝对路径  __file__内置变量返回当前文件
+
+print(os.path.split(r'C:\a\b\c.txt'))  #分割路径与文件名，组成一个二元元组
+
+print(os.path.dirname(r'C:\a\b\c.txt'))  #返回文件的父目录名
+
+print(os.path.basename(r'C:\a\b\c.txt')) #只取文件名
+
+print(os.path.exists(r'C:\a\b\c.txt'))  #判断路径是否存在
+
+print(os.path.isabs(r'C:\a\b\c.txt'),os.path.isabs(r'a\b\c.txt'))  #判断路径是否为绝对路径 windows下以盘符开头,linux下以/开头
+
+print(os.path.isfile(r'E:/pycharmProjects/python3/package_mod/os_mod/os_modu2.py'))  #判断路径是否为一个文件
+
+print(os.path.isdir(r'E:/pycharmProjects/python3/package_mod/os_mod'))   #判断是否为目录
+
+print(os.path.join('c','C:\\','a','b.txt'))  #从第一个绝对路径开始将所有路径拼接
+
+print(os.path.getatime(r'E:/pycharmProjects/python3/package_mod/os_mod/os_modu2.py'))  #获取文件最后访问时间
+
+print(os.path.getmtime(r'E:/Applications'))  #获取文件的最后修改时间
+
+print(os.path.getctime(r'E:/Applications'))  #获取文件的创建时间
+
+#以上三个时间实则都是从os.stat中得到的
