@@ -1,0 +1,21 @@
+#Downtiser
+import shelve   #可替代pickle 可将信息存储在一个文件中
+import datetime
+#f=shelve.open('shelve_test')
+# info={
+#     'name':'downtiser',
+#     'winrate':56
+# }
+#
+# name=['downtiser','noob','idiot']
+# f['info']=info   #持久化列表
+# f['name']=name   #持久化字典
+# f['datatime']=datetime.datetime.now()
+#
+# f.close()
+
+f=shelve.open('shelve_test')
+print(f.get('info'))
+print(f.get('name'))
+print(f.get('datatime'))
+f.close()
