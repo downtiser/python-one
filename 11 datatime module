@@ -1,0 +1,14 @@
+#Downtiser
+import datetime
+print(datetime.date)
+print(datetime.time)
+print(datetime.datetime)
+
+print(datetime.datetime.now())  #返回当前时间下的日期与时间
+print(datetime.datetime.now()+datetime.timedelta(3))  #获取一段时间后的世界，默认单位为day，负数表示过去
+print(datetime.datetime.now()+datetime.timedelta(seconds=4500))
+print(datetime.datetime.now()+datetime.timedelta(seconds=4500,hours=2.2,minutes=15))
+
+t=datetime.datetime.now()
+
+print(t.replace(hour=15))   #将当前时间修改为指定的时间
