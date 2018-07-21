@@ -1,0 +1,75 @@
+#Downtiser
+import re   #用于进行复杂的文字处理
+
+res = re.match('^do\d+','do123') #match方法本身就是从开头开始检索一个字符串，所以^在这里没效果
+#^意为开头为指定字符串的内容，后一个参数为源码,若没有匹配到返回none,\d意为后面跟的是数字，数量为\d+意为一个或多个数字 +即匹配前一个字符一次或多次
+print(res)
+print(res.group())  #查看匹配到了什么
+
+res = re.match('^.\d','do123,down')   #.匹配任意一个字符，除了\n  \d后面得接数字
+print(res)  #none 无法找到这样的字符串
+res = re.match('^.+','do123,down')      #.+为匹配任意个任意字符 类似于......
+print(res.group())
+
+res = re.search('do\d+','doowntiserdo567')   #与match不同,search方法是在整个文本中搜索
+print(res.group())
+
+res = re.search('d.+r$','yesdowntiser123')   #$要求整个字符串以某个字符结尾 类似于找d.....r这样的字符串
+print(res)  #none .+此时直接把最后的123都匹配了，所以无法找到指定内容
+
+res = re.search('d.+r$','yesdowntiser123r')   #在字符串结尾加上r就能匹配到了
+print(res)
+print(res.group())
+
+res = re.search('d[a-z]+r','yesdowntiser123r')   #[a-z]+表示后面跟的只是小写字母
+print(res)
+
+res= re.search('d[a-zA-Z]+r','yesdownDOwntiser123')   #[a-zA-Z]表示跟大写或小写字符
+print(res)
+
+res = re.search('#.+#','1234#Downtiser123#')
+print(res)
+
+res = re.search('\da[a-z]?\d','1a2ab3')  #?为取前''一个''字符1次或0次 所以xxx? 即匹配xxx或xx
+print(res)
+
+res = re.search('\d[a-z]{4}\d','1a2ab3abc4abcd5')    #{x}为匹配前一个字符x次
+print(res)
+
+res = re.search('[a-z][0-9]{3,4}[a-z]','a1b12c123d1234c')  #{x,y}为匹配前一个字符x到y次
+print(res)
+
+res = re.findall('[0-9]{1,4}','a1b12c123d1234c')   #findall为找出所有符合匹配条件的字符串 返回一个列表
+print('-----findall------',res)
+
+res = re.search('123|abc','doab12abc1123')      #匹配|左边或右边的字符串，谁先匹配到返回哪个
+print(res)
+
+res = re.findall('123|abc','doab12abc1123')
+print('-----findall------',res)
+
+res = re.search('(\(123\|\|=\?\\\\\)){2}','a12a(123||=?\)(123||=?\)a')
+#()为将括号内的所有字符看成一个整体进行分组对应匹配,如果要匹配特殊字符，需加上\进行转义.\\即\,\\\即\\即\
+print(res)
+
+res = re.search('\A\w\W.+\D\Z','a,abc123\n')    #\A等价于^,\w匹配[A-Za-z0-9],\W匹配非[A-Za-z0-9],\D匹配非数字,\Z等价于$
+print(res)
+
+res = re.findall('\s+','a\tb\nc\r')    #只匹配空白符\t \n \r,包括直接在键盘上按的
+print(res)
+
+res = re.search('(?P<name>[a-z]+)(?P<id>[0-9]+)',"downtiser123")  #?P指明分组生成字典,<>里面写key值
+print(res.groupdict())  #返回生成的字典
+print(res['name'])
+
+res=re.split('[a-z]+','123a12bc4567cde5')  #用第一个参数作为分隔符，将文本分割并返回一个列表
+print(res)
+
+res = re.sub('[a-z]+','*','123a12bc4567cde5',count=2)   #将正则匹配到的值替换成指定字符串,返回替换后的字符串,count指定替换几次
+print(res)
+
+res = re.search('[a-z]+','aBcDe',flags=re.I)  #flags=re.I 忽略大小写
+print(res)
+
+res = re.search('.+','\nabc\t',flags=re.S)  #  flags=re.S 使.可以匹配任意字符,包括\n \t \r
+print(res)
