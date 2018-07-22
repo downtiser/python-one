@@ -1,0 +1,20 @@
+#Downtiser
+#python2中经典类按深度优先来继承，新式类按广度优先来继承,python3中都按广度优先来继承
+class A:
+    def __init__(self):
+        print('in the A')
+
+class B(A):
+    def __init__(self):
+        print('in the B')
+
+class C(A):
+    def __init__(self):
+        print('in the C')
+
+class D(B,C):
+    pass
+    # def __init__(self):
+    #     print('in the D')
+
+e=D()
