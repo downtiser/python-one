@@ -1,0 +1,43 @@
+#Downtiser
+#类继承
+
+#class person:  #父类  经典类
+class person(object):   #新式类  新式类与经典类在多继承上有不同
+    def __init__(self,name,age):
+        self.name = name
+        self.age = age
+
+    def eat(self):
+        print('%s is eating....'%self.name)
+
+    def drink(self):
+        print('%s is drinking.....'%self.name)
+
+    def sleep(self):
+        print('%s is sleeping....'%self.name)
+
+    def talk(self):
+        print('%s is talking.....'%self.name)
+
+
+class Man(person):  #定义了Man这个子类继承了person这个父类及其所有属性与方法
+    def __init__(self,name,age,possession):  #重构父类的初始化方法,并且得输入父类的所有属性
+        #person.__init__(self,name,age)   #再次调用父类初始化方法,经典类写法
+        super(Man,self).__init__(name,age) # 和上一条语句功能相同,但可修改性更强,super指明调用父类方法，新式类写法
+        self.possession = possession
+
+    def bet(self):  #子类可以定义专属于自己的方法
+        print('%s is betting....'%self.name)
+
+    def sleep(self): #子类中可以重构父类方法
+        person.sleep(self)
+        print('the man is sleeping....')
+
+class Woman(person):  #定义了和Man相同的同级子类,同级子类之间不能互相调用各自的方法
+    def shopping(self):
+        print('%s is shopping....'%self.name)
+
+m1 = Man('idiot','25',15000)
+print(m1.possession)
+
+m1.sleep()
