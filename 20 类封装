@@ -1,0 +1,41 @@
+#Downtiser
+#类封装
+class dog:      #定义类
+    x = 'a'  #类变量，节省内存
+    list=[1,2]
+    name = 'class name'
+    def __init__(self,name):  #接受调用该类时赋予的初始值，self用于接收调用该方法的变量名
+        #构造函数 在调用实例时做一些初始化操作
+        self.name = name  #实例变量(静态属性)，赋值时赋给了具体的实例，作用域是实例本身 即dog1.name=name
+
+    def __del__(self):
+        print('The dog run away...')
+
+    def bark(self):     #定义类的方法(动态属性),当调用该方法时self接收调用该方法的对象，并将结果返回该对象
+        print('%s:WoWangWang!'%self.name)
+
+
+dog1=dog('Black_dog')  #调用类并实例化(初始化一个类)生成object,赋值给dog1这个变量并在内存中分配空间，便于以后调用
+dog2=dog('white_dog')  #相当于调用了dog类下的__init__方法,并把dog2这个变量名本身和其他参数传给了参数self，并为该变量开辟了一块内存空间，存放输入的参数
+dog3=dog('brown_dog')  #相当于dog.__init__(dog3,'brown_dog')
+
+dog1.bark()  #调用指定方法时是调用类中的方法,相当于dog.bark(dog1)
+dog2.bark()
+dog3.bark()
+print(dog1.name,dog1.x)  #先在实例本身找有无该实例变量，如果没有，再去类中找有无该类变量,优先返回实例变量
+print(dog.name)
+dog1.name = 'Teddy'   #可以直接给实例变量赋值
+dog1.size='Tiny'  #为实例添加实例变量
+print(dog1.name,dog1.size)
+del dog1.size  #可以删除实例变量
+dog1.x=123 #当在实例里修改类变量时，并不会真正修改类变量，而是在实例下增加一个同名实例变量，值为赋的值
+print(dog1.x,dog2.x)
+
+dog.x='noob'  #可以通过类来修改类变量
+
+print(dog.x,dog1.x,dog2.x)
+
+dog1.list.append('a')  #当类变量和实例变量为同名列表时，对该名进行列表操作会同时产生影响，因为类与实例共用一个列表
+dog2.list.append('b')
+dog.list.append('c')
+print(dog.list,dog1.list,dog2.list)
