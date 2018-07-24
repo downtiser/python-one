@@ -1,0 +1,58 @@
+#Downtiser
+#类方法
+class Dog(object):
+    n = 233
+    def __init__(self, name):
+        self.name = name
+    @classmethod #类方法只能调用类变量,不能访问实例变量
+    def eat(self,food):
+        print('%s is eating %s....'%(self.n,food))
+
+
+dog1 = Dog('noob')
+
+dog1.eat('shit')
+
+#Downtiser
+#属性方法
+class Dog(object):
+
+    def __init__(self, name):
+        self.name = name
+        self.__food = None
+    @property #将方法变为一个静态属性
+    def eat(self):
+        print('%s is eating %s....'%(self.name,self.__food))
+
+    @eat.setter   #给属性赋值
+    def eat(self,food):
+        print('the food is %s'%food)
+        self.__food = food
+
+    @eat.deleter  #无法直接删除静态属性的值，只能以再设置方法的手段来删除
+    def eat(self):
+        del self.__food
+        print('delete....')
+
+
+dog1 = Dog('noob')
+
+dog1.eat #隐藏实现细节
+dog1.eat = 'shit'
+dog1.eat
+
+#Downtiser
+#静态方法 只是名义上归类管理，但无法调用类或实力中的任何方法，属性
+
+class Dog(object):
+    def __init__(self, name):
+        self.name = name
+
+    @staticmethod  #此时下面的函数跟类已经没有关系了，只是一个单纯的函数，调用时不会自动传入self参数，也无法调用类参数
+    def eat(self,food):
+        print('%s is eating %s....'%(self,food))
+
+
+dog1 = Dog('noob')
+
+dog1.eat('idiot','shit')
