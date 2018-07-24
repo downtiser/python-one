@@ -44,7 +44,7 @@ player.update(dict)  #以参数字典作为新字典更新原有字典11，有�
 new=dict.fromkeys([1,2,3],'a') #初始化一个列表，key取第一个参数中每个列表元素，value取后面值，当后一个参数为列表或字典之类时，每个key都指向这个序列，类似于浅copy，改一个全会变
 print(new)
 
-
+player.get(key)  #返回该字典中对应key的value
 print(player)
 print(dict.values()) #取出字典中每一个value，组成一个列表
 print(dict.keys())  #取出字典中每一个key，组成一个列表
