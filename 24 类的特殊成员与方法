@@ -1,0 +1,116 @@
+#Downtiser
+
+class Dog(object):
+    '''the class is used to describe a dog object'''
+    def __init__(self,name):
+        self.name = name
+
+    def bark(self):
+        print('%s is barking:woof woof!'%self.name)
+
+    def __call__(self, *args, **kwargs):  #__call__使得实例可以直接在后面加上()来调用此方法
+        print('the call',args,kwargs)
+
+    def __str__(self): #在直接打印实例时触发该方法，打印该方法的返回值
+        return '<the object is %s>'%(self.name)
+
+
+print(Dog.__doc__)   #返回类的简要描述
+
+from lib.mod1 import A
+
+obj = A('abc')
+
+print(obj.__module__)  #返回当前对象的类的所在模块
+print(obj.__class__)  #返回对象的类的本身属性
+
+dog1 = Dog('Teddy')
+
+dog1(1,2,3,age = 15, name = 'noob')  #调用__call__方法，可以传任意参数
+
+print(dog1.__dict__)  #返回所有实例属性，不包括类属性
+print(Dog.__dict__)   #返回所有类属性，不包括实例属性
+
+print(dog1)
+
+
+class Foo(object): #可以用于封装字典
+    def __init__(self):
+        self.data = {}
+
+    def __getitem__(self, key):
+        print('__getitem__', key)
+        return self.data.get(key)  #通过对象调用字典时会触发该方法，可以借此暗中返回一个对象字典data的对应value
+
+    def __setitem__(self, key, value):
+        print('__setitem__', key, value)
+        self.data[key] = value  #通过给对象赋 key-value时会触发该方法，可以在该方法中给对象的字典添加内容
+
+    def __delitem__(self, key):
+        print('__delitem__', key)
+
+
+obj = Foo()
+
+obj['name'] = 'downtiser'   #给对象赋key-value值时自动触发___setitem__方法
+
+print(obj.data)
+print(obj['name']) #可以直接通过该对象调用 key-value,此时会直接触发__getitem__方法
+
+del obj['name']  #此时并不会真正删除该键值对，只会触发__delitem__方法
+
+#Downtiser
+
+#普通方式创建类
+class Foo(object):  #Foo本身也是一个对象
+    def __init__(self,name):
+        self.name = name
+
+
+f = Foo('downtiser')
+print(type(f)) #f 的类是Foo
+print(type(Foo)) #Foo 类(对象)的类是type类.type类是所有类的类
+
+
+#高级方式创建类
+
+def func(self):
+    print('my name is %s'%self.name)
+
+def __init__(self,name,age):
+    self.name = name
+    self.age = age
+
+Foo2 = type('Foo2',(object,), {'talk':func,'__init__':__init__})
+#第一个参数指明要通过type类实例化的类的名，第二个参数指明要继承的类名，必须要有()，可以为空(),最后一个字典指明类中的方法
+
+f1 = Foo2('noob',25)  #实例化
+f1.talk()  #调用对象中的方法
+print(f1.name,f1.age) #调用对象中的方法
+
+#类创建过程 py2
+class Mytype(type):
+    def __init__(self, what, bases = None, dict = None):
+        print('--init the Mytype--')
+        super(Mytype,self).__init__(what, bases, dict)
+
+    def __call__(self, *args, **kwargs):  #通过__call__来创建__new__
+        print('--call in the mytype')
+        obj = self.__new__(self, *args, **kwargs) #调用new生成一个实例作为self，开辟一块内存空间
+        self.__init__(obj, *args, **kwargs) #调用__init__方法传入了先前生成的实例
+
+
+class Foo3(object):
+    __metaclass__ = Mytype #源类，定义Foo的实例如何创建
+    def __init__(self,name):
+        self.name = name
+        print('in the __init__')
+
+    def __new__(cls, *args, **kwargs):  #实例化是通过new来实现的，new里调用了__init__,new在实例化时会先于__init__执行
+        print('---in the new---')
+        return object.__new__(cls) #继承父类object的__new__创建实例的方法，cls即Foo3，返回对应实例
+
+
+f2 = Foo3('idiot')
+
+print(f2.name)
