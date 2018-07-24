@@ -1,0 +1,33 @@
+#Downtiser
+
+class Dog():
+    def __init__(self, name):
+        self.name = name
+
+    def eat(self,food):
+        print('%s is eating %s'%(self.name, food))
+
+def bark(self):
+    print('%s is barking...'%self.name)
+
+dog1 = Dog('Teddy')
+
+user_choice = input('pls>>>')
+
+print(hasattr(dog1,user_choice))  #判断一个对象有无指定实例，第一个参数为指定对象，第二个参数为字符串形式的属性或方法
+if hasattr(dog1,user_choice):
+    print(getattr(dog1, user_choice))
+    #delattr(dog1,user_choice)   #删除指定对象的指定属性
+    # print(getattr(dog1,user_choice))  #根据字符串返回指定对象的指定方法的内存地址或指定属性的值
+    # func = getattr(dog1, user_choice)
+    # func('meat')
+else:
+    setattr(dog1, user_choice, None)
+    print(getattr(dog1, user_choice))
+    # setattr(dog1,user_choice,bark)  #为对象创建方法 setattr(x, 'y', v) is equivalent to ``x.y = v'',但类似于静态方法，不会传入self
+    # dog1.talk(dog1)
+
+# setattr(dog1, user_choice, 22)
+#
+# print(dog1.age)
+#print(dog1.name)
