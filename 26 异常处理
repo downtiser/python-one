@@ -1,0 +1,86 @@
+#Downtiser
+
+class Dog():
+    def __init__(self, name):
+        self.name = name
+
+    def eat(self,food):
+        print('%s is eating %s'%(self.name, food))
+
+def bark(self):
+    print('%s is barking...'%self.name)
+
+dog1 = Dog('Teddy')
+
+user_choice = input('pls>>>')
+
+# try:
+#     getattr(dog1, user_choice)
+# except AttributeError as e:
+#     print('The object does not have the attribute %s!'%e)
+
+
+
+name = ['noob', 'downtiser', 'idiot']
+# try:
+#     print(name[4])
+# except IndexError as e:
+#     print('the value %s does ont exist!'%e)
+
+
+data = {}
+try:
+    getattr(dog1, user_choice)
+    open('123','r')
+    print(name[4])
+    print(data['1'])
+except KeyError as e:
+    print('the key %s does not exist!'%e)
+except (IndexError, AttributeError) as e:  #对不同异常若采取的处理方式相同，可将其放在一起处理
+    print(e)
+# except FileNotFoundError as e:
+#     print(e)
+except Exception as e:    #可用来抓取大部分未知错误，除了缩进错误，语法错误
+    print('unknown error!',e)
+else:  #当代码都运行正常时进入
+    print('All processes are common!')
+finally:  #不管有错没错，都会进入
+    print('Done!')
+#
+# try:
+#     getattr(dog1, user_choice)
+#     open('123', 'r')
+#     print(name[4])
+#     print(data['1'])
+# except Exception as e:   #Exceptions 代表所有异常 不建议一开始就用
+#     print(e)
+#常见异常
+# AttributeError 试图访问一个对象没有的树形，比如foo.x，但是foo没有属性x
+# IOError 输入/输出异常；基本上是无法打开文件
+# ImportError 无法引入模块或包；基本上是路径问题或名称错误
+# IndentationError 语法错误（的子类） ；代码没有正确对齐
+# IndexError 下标索引超出序列边界，比如当x只有三个元素，却试图访问x[5]
+# KeyError 试图访问字典里不存在的键
+# KeyboardInterrupt Ctrl+C被按下
+# NameError 使用一个还未被赋予对象的变量
+# SyntaxError Python代码非法，代码不能编译(个人认为这是语法错误，写错了）
+# TypeError 传入对象类型与要求的不符合
+# UnboundLocalError 试图访问一个还未被设置的局部变量，基本上是由于另有一个同名的全局变量，
+# 导致你以为正在访问它
+# ValueError 传入一个调用者不期望的值，即使值的类型是正确的
+
+
+#Downtiser
+#自定义异常
+class MyError(Exception):  #自定义异常，继承基类Exception
+    def __init__(self,msg):
+        self.msg = msg
+
+    def __str__(self):  #当打印异常时触发该函数,可以在打印异常时做额外工作
+        print('stop doing that!')
+        return self.msg
+
+try:
+    raise MyError('This is my error!')  #raise 触发该异常
+except MyError as e:
+    print(e)
