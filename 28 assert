@@ -1,0 +1,5 @@
+#Downtiser
+
+a = 1234
+assert type(a) is int  #如果后面的代码依赖于这个结果，可用断言检查结果
+print(a/2)
