@@ -1,0 +1,60 @@
+#Downtiser
+#服务器端
+import socket
+import os
+
+
+sever = socket.socket()
+
+sever.bind(('localhost',6954)) #绑定要监听的端口
+
+sever.listen() #监听绑定的端口
+print('Waiting for calling......')
+
+while True:
+    conn, address = sever.accept() #等待对方连接, accept()返回两个值，一个是对方的socket实例，另一个是对方的ip地址和端口号
+    #conn 就是客户端连接过来而在服务器端为其生成的一个连接实例
+    print('The call is coming!')
+    print(conn, address)
+
+    while True:
+        data = conn.recv(1024000)  #通过接受到的socket实例来接受数据
+        if not data:
+            print('对方已挂断!')
+            break
+        print('recv:',data.decode())
+        f = open('pic1.jpg', 'rb')
+        back_data = f.read()
+        f.close()
+        # back_data = os.popen(data.decode()).read()  #返回客户端发送的命令的执行结果，类似于SSH
+        # conn.send(back_data.encode('utf-8'))  #通过接收到的socket实例向对方返回处理过的数据,如果数据量超过限制，多余的数据会积压在缓冲区，下一次会
+        # #先把积压的数据返回给客户端
+        conn.send(back_data)
+    print('Wait for calling....')
+
+sever.close()
+
+
+#Downtiser
+#服务器端
+import socket
+
+client = socket.socket()  #不填参数 默认为ipv4,TCP, 声明socket类型,同时生成socket连接对象
+
+client.connect(('localhost',6954))  #提供对方ip地址和端口号
+count = 2
+while True:
+    msg = input('>>>').strip()
+    f = open('pic%s.jpg'%count, 'wb')
+    if len(msg) == 0:
+        break
+    else:
+        client.send(msg.encode('utf-8')) #向对方发送数据,只能为byte类型,
+
+        data = client.recv(1024000)  #接收对方返回的数据，并指明接收数据的最大字节数,实际一次接受数据量有上限，根据网卡和系统而定
+        f.write(data)
+        count += 1
+        #print(data.decode())
+
+f.close()
+client.close()  # 关闭连接
