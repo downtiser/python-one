@@ -18,7 +18,7 @@ while True:
     print(conn, address)
 
     while True:
-        data = conn.recv(1024000)  #通过接受到的socket实例来接受数据
+        data = conn.recv(1024000)  #通过接受到的socket实例来接受数据， 不建议超过8192字节，即8kb
         if not data:
             print('对方已挂断!')
             break
