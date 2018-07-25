@@ -1,0 +1,13 @@
+#Downtiser
+#通过字符串形式的模块名，导入相应模块
+mod_name = 'lib.mod1'
+# mod = __import__(mod_name)  #以字符串形式导入模块,实际上导入了lib, 该方法为解释器专用
+# print(mod.mod1)
+# a = mod.mod1.A('noob')
+# print(a.name)
+
+import importlib
+
+mod2 = importlib.import_module(mod_name) #建议用此方法，此时真正导入了lib.mod1
+print(mod2)
+mod2.func()
