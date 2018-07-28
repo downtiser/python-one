@@ -1,3 +1,40 @@
+socket是对TCP/IP协议 收与发过程的封装
+用socket进行通信需进行以下几步:
+发送端：
+import socket
+1 选择通信协议，生成socket实例 socket.TCP/IP
+2 和对方建立通信，获取对方IP地址和端口号(connect(a.ip,a.port)
+3 向对方发送数据，socket.send(data)
+4 接收对方返回的数据
+5 关闭链接 socket.close()
+接收端(服务器端)：(先启用接收端)
+import socket
+1 声明类型.生成socket实例 socket.TCP/IP
+2 监听端口 listen(0.0.0.0,1234) #0.0.0.0代表从任何一个网卡接收到数据都能被监听到，后一个参数为指定监听的端口号
+3 等待接收数据
+4 接收数据
+5 返回数据
+
+socket参数
+
+family(socket家族)
+socket.AF_UNIX：用于本机进程间通讯，为了保证程序安全，两个独立的程序(进程)间是不能互相访问彼此的内存的，
+但为了实现进程间的通讯，可以通过创建一个本地的socket来完成
+
+socket.AF_INET:(还有AF_INET6被用于ipv6，还有一些其他的地址家族，不过，他们要么是只用于某个平台，要么就是已经被废弃，或者是很少被使用，或者是根本没有实现，
+所有地址家族中，AF_INET是使用最广泛的一个，python支持很多种地址家族，但是由于我们只关心网络编程，所以大部分时候我么只使用AF_INET)
+
+socket type类型
+socket.SOCK_STREAM #for tcp
+socket.SOCK_DGRAM #for udp
+socket.SOCK_RAW #原始套接字，普通的套接字无法处理ICMP、IGMP等网络报文，而SOCK_RAW可以；其次，SOCK_RAW也可以处理特殊的IPv4报文；
+此外，利用原始套接字，可以通过IP_HDRINCL套接字选项由用户构造IP头。
+socket.SOCK_RDM #是一种可靠的UDP形式，即保证交付数据报但不保证顺序。SOCK_RAM用来提供对原始协议的低级访问，
+在需要执行某些特殊操作时使用，如发送ICMP报文。SOCK_RAM通常仅限于高级用户或管理员运行的程序使用。
+socket.SOCK_SEQPACKET #废弃了
+
+
+
 #Downtiser
 #服务器端
 import socket
