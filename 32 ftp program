@@ -1,0 +1,94 @@
+FTP server:
+1 读取文件名
+2 检查文件是否存在
+3 打开文件
+4 检测文件数据大小
+5 将文件数据大小发送给客户端
+6 等待用户端发送确认信息，防止粘包
+7 循环分步发送数据，边读边发,同时计算MD5值
+8 发送MD5值给客户端以让客户端确认文件是否正确
+
+FTP client:
+1 向服务器端发送要获取的文件名
+2 接收服务器端发送的文件大小数据
+3 向服务器端发送确认信息
+4 循环接收服务器端发送的数据
+
+
+
+
+#客户端
+#Downtiser
+import socket, hashlib
+client = socket.socket()
+client.connect(('localhost',8989))
+
+while True:
+    command = input('请输入>>>').strip()
+    if not command:
+        print('无效的命令！')
+        continue
+    if command.startswith('get'):
+        client.send(command.encode('utf-8'))
+    else:
+        print('不合法的命令！')
+        continue
+    file_size = int(client.recv(1024).decode())
+    print('文件大小>>>',file_size,'bytes')
+    client.send('已准备好接受文件!'.encode())
+    file_name = command.split()[1]
+    f = open(file_name,'wb')
+    received_size = 0
+    client_md5 = hashlib.md5()
+    while received_size < file_size:
+        if file_size - received_size > 8192: #还要收不止一次
+            size = 8192
+        else:
+            size = file_size - received_size  #最后一次收
+        data = client.recv(size)
+        received_size +=len(data)
+        client_md5.update(data)
+        f.write(data)
+        #print('%s bytes/%s bytes'%(received_size,file_size))
+    else:
+        source_md5 = client.recv(1024)
+        print('Done!')
+        print('源文件md5>>>',source_md5.decode(),'本地文件md5>>>',client_md5.hexdigest())
+        f.close()
+    
+  #服务器端
+  #Downtiser
+import socket,os,hashlib
+
+sever = socket.socket()
+
+sever.bind(('localhost',8989))
+sever.listen()
+
+
+
+while True:
+    print('等待访问....')
+    conn, address = sever.accept()
+    print('访问进入!')
+    while True:
+        data = conn.recv(1024)
+        if not data:
+            print('客户端已断开!'.split())
+            break
+        cmd, filename = data.decode().split()
+        print(filename)
+        if os.path.isfile(filename):
+            f = open(filename,'rb')
+            md5_value = hashlib.md5()  #生成MD5对象
+            file_size = os.stat(filename).st_size  #获取文件大小
+            conn.send(str(file_size).encode('utf-8'))
+            ack = conn.recv(1024)  #等待客户端确认
+            print(ack.decode())
+            for line in f:
+                md5_value.update(line)
+                conn.send(line)
+            print('The MD5>>>',md5_value.hexdigest())
+            conn.send(md5_value.hexdigest().encode('utf-8'))
+
+            f.close()
