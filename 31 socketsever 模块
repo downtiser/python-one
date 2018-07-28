@@ -1,0 +1,49 @@
+#服务器端
+#Downtiser
+
+import socketserver
+#多并发服务器
+class My_TCP_handler(socketserver.BaseRequestHandler):
+    def handle(self):
+        print('客户端已连接!')
+        while True:
+            try:  #抓客户端强制断开的异常
+                self.data = self.request.recv(1024).strip()  #request是每次请求到来时为其生成的一个socket实例
+                print('客户端%s发送信息>>>%s'%(self.client_address[0], self.data.decode()))
+                if not self.data:
+                    print('客户端已断开!')
+                    break
+                self.request.send(self.data.upper())
+            except ConnectionResetError as e:
+                print('客户端强制断开！ERROR:%s'%e)
+                break
+
+
+Host, Port = 'localhost', 6080
+#sever = socketserver.TCPServer((Host, Port), My_TCP_handler) #实例化一个socketsever对象，并传入地址和自己创建的类
+sever = socketserver.ThreadingTCPServer((Host, Port),My_TCP_handler)  #用ThreadingTCPSever可实例化一个多线程socket实例,在linux上可以用ForkingTCPServer达到同样效果
+print('服务器已启动!')
+sever.serve_forever()  #开始准备接受多个请求,一旦接受到客户端请求，就调用handle()方法并做相应处理
+
+#客户端
+#Downtiser
+#服务器端
+import socket
+
+client = socket.socket()  #不填参数 默认为ipv4,TCP, 声明socket类型,同时生成socket连接对象
+
+client.connect(('localhost',6080))  #提供对方ip地址和端口号
+
+while True:
+    msg = input('>>>').strip()
+
+    if len(msg) == 0:
+        print('您已从服务器断开！')
+        break
+    else:
+        client.send(msg.encode('utf-8')) #向对方发送数据,只能为byte类型,
+        data = client.recv(1024)  #接收对方返回的数据，并指明接收数据的最大字节数,实际一次接受数据量有上限，根据网卡和系统而定,最好不要超过8192,即8kb
+        print(data.decode())
+
+
+client.close()  # 关闭连接
