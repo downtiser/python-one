@@ -1,0 +1,56 @@
+#客户端
+#Downtiser
+import socket
+
+client = socket.socket()
+client.connect(('localhost',6080))
+
+while True:
+    command = input('请输入您想请求的命令以获取结果>>>').strip()
+    if not command:
+        print('无效的输入!')
+        continue
+    client.send(command.encode('utf-8'))
+    length = int(client.recv(1024).decode())  #接收结果数据长度
+    client.send(b'0')  #发送任意信息以确认，防止服务器端粘包
+    print('data size>>>',length)
+    received_size = 0  #用于记录已收到数据的长度
+    received_data = b'' #存储每次收到的数据
+    while received_size < length:  #一直循环接收直至收到数据的长度等于结果数据长度
+        data = client.recv(1024)
+        received_size += len(data)
+        received_data += data
+        #print("----%s----"%received_size)
+    else:
+        print(received_data.decode())
+        print('Done! received size>>>',received_size)
+        
+        
+  #服务器端
+  #Downtiser
+import socket
+import os
+server = socket.socket()
+server.bind(('localhost',6080))
+server.listen()
+
+while True:
+    print('等待访问......')
+    conn, address = server.accept()
+    print('访问接通!')
+    while True:
+        command = conn.recv(1024)
+        print('Command>>>',command.decode())
+        if not command:
+            print('此次访问已断开!')
+        res = os.popen(command.decode()).read()  #popen()接收字符串，返回字符串，所以需要decode
+        if not res:
+            conn.send(str(len('无效的命令!'.encode())).encode('utf-8'))
+            client_ack = conn.recv(1024)  #防止粘包
+            conn.send('无效的命令!'.encode('utf-8')) #如果客户端输入的命令无法执行，则结果为空，不会真正发送给客户端,禁止发送空数据,所以需加一层判断
+            continue
+        conn.send(str(len(res.encode())).encode('utf-8'))
+        #发送数据长度，因为为整数，需转成字符串在编码成bytes !!!!特别注意，因为res为unicode，其中的中文
+        #编码成bytes长度变为原长度的3倍，所以服务器端传给客户端的长度应为编码后的长度，否则会导致前后结果不一致
+        client_ack = conn.recv(1024)   #接收客户端确认信息，阻断前后两次数据发送，防止粘包
+        conn.send(res.encode('utf-8'))
