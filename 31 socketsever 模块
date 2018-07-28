@@ -1,3 +1,11 @@
+创建socketsever需要经过以下几步:
+1 创建一个类,继承BaseRequestHandler, 并且还要重写父类里的handler方法
+2需要实例化一个sever类(TCPSever, UDPSever, UnixStreamSever, UnixDatagramSever)
+并且传递sever IP 和 之前重写的handler方法当作参数给这个实例
+3 然后调用实例的sever.handler_request()来接受一个请求，或sever.forever_request()来
+接受多个请求
+
+
 #服务器端
 #Downtiser
 
