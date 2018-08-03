@@ -1,0 +1,59 @@
+基于python的ssh服务模块
+
+建立ssh连接并向服务器发送命令以获取结果
+#Downtiser
+# SSHClient
+# 用于连接远程服务器并执行基本命令
+import paramiko
+
+ssh = paramiko.SSHClient() #生成ssh实例
+
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())  #若在服务端的.ssh下的known_host中找不到对应的主机，就自动添加
+
+ssh.connect(hostname="192.168.10.10", port=22, username='root', password='gu996080') #连接服务器
+
+stdin, stdout, stderr = ssh.exec_command('df -h') #执行命令，获取命令结果
+
+res, err = stdout.read(), stderr.read() #获取命令结果
+result = res if res else err
+print(result.decode())
+ssh.close()
+
+#用python建立类似于linux中的scp文件传输服务
+import paramikot
+transport = paramiko.Transport(('192.168.10.10',22)) #创建实例
+transport.connect(username='root',password='gu996080') #建立链接
+
+sftp = paramiko.SFTPClient.from_transport(transport)  #定义了传输协议
+
+#sftp.put('from_win.txt','/root/from_win.txt')  #将本地路径上的文件上传到远程制定路径,!!注意，不能光写一个目录，还要写上上传后的文件名,否则会报错
+
+sftp.get('/root/layer1/id_rsa', 'id_rsa') #将远程路径上的指定文件下载到本地路径
+
+transport.close()
+
+#基于秘钥验证的ssh客户端
+#Downtiser
+#基于秘钥验证的ssh连接
+import paramiko
+private_key = paramiko.RSAKey.from_private_key_file('id_rsa')   #指定私钥存放地址
+ssh = paramiko.SSHClient()
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())   #允许不在known_hosts文件中的主机访问
+ssh.connect('192.168.10.10',22,username='root',pkey=private_key) #建立链接，并指定私钥
+stdin, stdout, stderr = ssh.exec_command('df -h') #执行命令，获取命令结果
+res, err = stdout.read(), stderr.read() #获取命令结果
+result = res if res else err
+print(result.decode())
+ssh.close()
+
+
+#基于秘钥验证的scp
+#Downtiser
+import paramiko
+transport = paramiko.Transport(('192.168.10.10',22))
+private_key = paramiko.RSAKey.from_private_key_file('id_rsa')
+transport.connect(username='root', pkey=private_key)
+sftp = paramiko.SFTPClient.from_transport(transport)
+sftp.put('from_win.txt', '/root/layer1/layer2/from_win.txt')
+sftp.get('/root/layer1/layer2/guess.sh','my_guess.sh')
+transport.close()
