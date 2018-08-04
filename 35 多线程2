@@ -1,0 +1,125 @@
+#线程锁
+#Downtiser
+import threading,time
+num = 0
+
+def run():
+    lock.acquire()
+    #在某一个线程在调用该函数修改公共数据num时加上线程锁，保证在一个线程修改完数据之前没有其它线程能修改该数据，避免出错
+    global num
+
+    num += 1
+    lock.release() #修改完后释放该锁，使得其他线程可以来修改
+
+lock = threading.Lock()  #生成线程锁
+
+for i in range(1,51):
+    t = threading.Thread(target=run)
+    t.start()
+print(num)
+
+
+#Downtiser
+#递归锁
+import threading, time
+def run1():
+    print("grab the first part data")
+    lock.acquire()
+    global num
+    num += 1
+    lock.release()
+    return num
+
+
+def run2():
+    print("grab the second part data")
+    lock.acquire()
+    global num2
+    num2 += 1
+    lock.release()
+    return num2
+
+def run3():
+    lock.acquire()
+    res = run1()
+    print('--------between run1 and run2-----')
+    res2 = run2()
+    lock.release()
+    print(res, res2)
+
+num, num2 = 0, 0
+lock = threading.RLock()  #使用递归锁，避免因使用多重锁而造成的死锁
+for i in range(10):
+    t = threading.Thread(target=run3)
+    t.start()
+
+while threading.active_count() != 1:
+    print(threading.active_count())
+else:
+    print('----all threads done---')
+    print(num, num2)
+    
+#Downtiser
+import threading, time
+#semaphore 同时允许指定数量的线程修改数据
+import threading, time
+def run(n):
+    semaphore.acquire()
+    time.sleep(1)
+    print("run the thread: %s\n" % n)
+    semaphore.release()
+semaphore = threading.BoundedSemaphore(5)  # 最多允许5个线程同时运行
+for i in range(20):
+    t = threading.Thread(target=run, args=(i,))
+    t.start()
+
+while threading.active_count() != 1:
+    pass  # print threading.active_count()
+else:
+    print('----all threads done---')
+    
+    
+#Downtiser
+#event 事件 实现多个线程之间的交互
+import threading, time, sys
+
+event = threading.Event()
+event_car = threading.Event()
+def light():
+    event.set()
+    count = 1
+    while True:
+        if count > 5 and count <= 10:
+            event.clear()
+            event_car.set()
+            print('The red light is on! %s'%(10-count))
+        elif count > 10 :
+            event.set()
+            print('The green light is on! %s'%(count-10))
+            count = 0
+        else:
+            print('The green !  %s'%(5-count))
+        count += 1
+        time.sleep(1)
+
+def car(name):
+    event_car.set()
+    while True:
+        if event.is_set():
+            event_car.clear()
+            print('\nThe car [%s] is running'%name)
+            event_car.wait()
+
+        else:
+            print('\nThe red light is on,the car [%s] stops! '%name)
+            event.wait()
+            event_car.set()
+            print('\n car:The green light is on!')
+
+
+car1 = threading.Thread(target=car, args=('car1',))
+light1 = threading.Thread(target=light)
+light1.start()
+car1.start()
+
+
